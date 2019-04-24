@@ -1,12 +1,11 @@
 {
     "version": "0.1.0",
     "configurations": [
-        
         {
             "name": "Launch asynchronous.html",
             "type": "chrome",
             "request": "launch",
-            "file": "${workspaceFolder}/../asynchronous.html"
+            "file": "${workspaceFolder}../asynchronous.html"
         },
     ]
 }
