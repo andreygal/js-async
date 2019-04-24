@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Asynchronous JavaScript</title>
 </head>
+
 <body>
     <h1>Asynchronous JavaScript</h1>
     <script>
@@ -14,7 +16,7 @@
         //         console.log('Async Hey there!');
         //     }, 2000);
         // }
-        
+
         // const first = () => {
         //     console.log('Hey there!'); 
         //     second(); 
@@ -43,29 +45,62 @@
         // }
         // getRecipe();
         const getIDs = new Promise((resolve, reject) => {
-                setTimeout(() => {
-                    reject([523, 883, 301, 943]);
-                }, 1500); 
+            setTimeout(() => {
+                resolve([523, 883, 301, 943]);
+            }, 1500);
         });
 
         const getRecipe = recID => {
             return new Promise((resolve, reject) => {
-                setTimeout(ID => {    
-                    const recipe = {title: 'Fresh tomato pasta', 
-                                    publisher: 'Jonas'};
-                    resolve(`${ID}: ${recipe.title}`);
+                console.log(recID); 
+                setTimeout(ID => {
+                    const recipe = {
+                        title: 'Fresh tomato pasta',
+                        publisher: 'Jonas'
+                    };
+                    resolve(recipe);
                 }, 1500, recID);
-            });  
-        }; 
+            });
+        };
 
-        getIDs
-        .then(IDs => {
+        const getRelated = publisher => {
+            return new Promise((resolve, reject) => {
+                setTimeout(pub => {
+                    const recipe = {
+                        title: 'Italian Pizza',
+                        publisher: 'Jonas'
+                    };
+                    resolve(`${pub}: ${recipe.title}`);
+                }, 1500, publisher);
+            });
+        }
+
+        // getIDs
+        //     .then(IDs => {
+        //         console.log(IDs);
+        //         return getRecipe(IDs[2]);
+        //     })
+        //     .then(publisher => {
+        //         console.log(publisher);
+        //         return getRelated(publisher); 
+        //     })
+        //     .then(related => {
+        //         console.log(related); 
+        //     })
+        //     .catch(error => {
+        //         console.log('Error!');
+        //     });
+
+        async function getRecipesAW() {
+            const IDs = await getIDs; 
             console.log(IDs);
-            getRecipe(IDs[2])
-        })
-        // .catch(error => {
-        //     console.log('Error!'); 
-        // });
+            const recipe = await getRecipe(IDs[2]);
+            console.log(recipe); 
+            const related = await getRelated(recipe.publisher); 
+            console.log(related); 
+        }
+        getRecipesAW(); 
     </script>
 </body>
+
 </html>
